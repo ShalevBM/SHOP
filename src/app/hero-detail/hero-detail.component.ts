@@ -2,6 +2,9 @@
 
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Hero } from '../hero';
+import { ActivatedRoute } from '@angular/router';
+import { HeroService } from '../hero.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-hero-detail',
@@ -11,13 +14,25 @@ import { Hero } from '../hero';
 export class HeroDetailsComponent implements OnInit {
 
   @Input() hero?: Hero; // מגיע מהאבא
-
-  @Output() alertRequested = new EventEmitter<string>(); 
+  @Output() alertRequested = new EventEmitter<string>();
+  constructor(
+    private route: ActivatedRoute,
+    private heroService: HeroService,
+    private location: Location
+  ) {}
   // אירוע שהבן שולח לאבא
-
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getHero();
+   }
+  getHero(): void {
+    const id=this.route!.snapshot!.paramMap!.get('id')!;
+    this.heroService.getHero(+id).subscribe(hero => this.hero = hero);
+  }
 
   onButtonClick() {
     this.alertRequested.emit(); // מפעיל את האירוע → האבא יקבל אותו
+  }
+  goBack(): void {
+    this.location.back();
   }
 }

@@ -37,4 +37,5 @@ onSelect(hero:Hero):void{
 showAlert() {
   alert('זה אלרט מהאבא!');
 }
+
 }
