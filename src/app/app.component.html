@@ -1,5 +1,10 @@
 <h1>{{title}}</h1>
 <input [value]="title"/>
 <button (click)="onSave()">Save</button>
-<app-heroes></app-heroes>
+<nav>
+    <a routerLink="/heroes">Heroes</a>
+    <a routerLink="/dashboard">Dashboard</a>
+</nav>
+<router-outlet></router-outlet>
 <app-messages></app-messages>
+
